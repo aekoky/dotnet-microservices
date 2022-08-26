@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "kgJnkyZ9lqBPd0C644aFmbQ/vmWFPKYZJieea1Y91ZTf6imBSbj/sA8I86zpYwcRdppMGKz6OQVLMzV7Wv8k0g==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Reda\\Desktop\\Workspace\\.Net Projects\\Infra\\backend\\TemplateService\\TemplateService.Api\\TemplateService.Api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Reda\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.18\\microsoft.netcore.app.host.win-x64.3.1.18.nupkg.sha512"
+  ],
+  "logs": []
+}

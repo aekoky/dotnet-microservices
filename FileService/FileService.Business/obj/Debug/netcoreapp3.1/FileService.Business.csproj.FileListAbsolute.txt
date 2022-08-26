@@ -1,0 +1,9 @@
+C:\Users\Reda\Desktop\Workspace\.Net Projects\Infra\backend\FileService\FileService.Business\bin\Debug\netcoreapp3.1\FileService.Business.deps.json
+C:\Users\Reda\Desktop\Workspace\.Net Projects\Infra\backend\FileService\FileService.Business\bin\Debug\netcoreapp3.1\FileService.Business.dll
+C:\Users\Reda\Desktop\Workspace\.Net Projects\Infra\backend\FileService\FileService.Business\bin\Debug\netcoreapp3.1\FileService.Business.pdb
+C:\Users\Reda\Desktop\Workspace\.Net Projects\Infra\backend\FileService\FileService.Business\obj\Debug\netcoreapp3.1\FileService.Business.csproj.AssemblyReference.cache
+C:\Users\Reda\Desktop\Workspace\.Net Projects\Infra\backend\FileService\FileService.Business\obj\Debug\netcoreapp3.1\FileService.Business.AssemblyInfoInputs.cache
+C:\Users\Reda\Desktop\Workspace\.Net Projects\Infra\backend\FileService\FileService.Business\obj\Debug\netcoreapp3.1\FileService.Business.AssemblyInfo.cs
+C:\Users\Reda\Desktop\Workspace\.Net Projects\Infra\backend\FileService\FileService.Business\obj\Debug\netcoreapp3.1\FileService.Business.csproj.CoreCompileInputs.cache
+C:\Users\Reda\Desktop\Workspace\.Net Projects\Infra\backend\FileService\FileService.Business\obj\Debug\netcoreapp3.1\FileService.Business.dll
+C:\Users\Reda\Desktop\Workspace\.Net Projects\Infra\backend\FileService\FileService.Business\obj\Debug\netcoreapp3.1\FileService.Business.pdb
