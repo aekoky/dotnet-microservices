@@ -1,7 +1,8 @@
-﻿using Hellang.Middleware.ProblemDetails;
+﻿using Formuler.Shared.DTO.UserService;
+using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using UserService.Business.DTO.Requests;
+using System.Threading.Tasks;
 using UserService.Data.Models;
 using UserService.Data.Repositories;
 
@@ -20,16 +21,16 @@ namespace UserService.Business.Services
             _accountRepository = accountRepository;
         }
 
-        public UserEntity GetUser(string username)
+        public async Task<UserEntity> GetUser(string username)
         {
-            var account = _accountRepository.GetAccountByUsername(username);
+            var account = await _accountRepository.GetAccountByUsername(username).ConfigureAwait(false);
             if (account is null)
                 throw new ProblemDetailsException(StatusCodes.Status404NotFound, "No user were found with the giben username");
 
-            return _userRepository.Find(account.UserId);
+            return await _userRepository.FindAsync(account.UserId).ConfigureAwait(false);
         }
 
-        public UserEntity RegisterUser(RegisterUserRequest registerUserRequest)
+        public async Task<UserEntity> RegisterUser(RegisterUserRequestDTO registerUserRequest)
         {
             var user = new UserEntity
             {
@@ -39,7 +40,7 @@ namespace UserService.Business.Services
                 PhoneNumber = registerUserRequest.PhoneNumber
             };
 
-            _userRepository.AddOne(user);
+            await _userRepository.AddOneAsync(user).ConfigureAwait(false);
 
             var salt = BCrypt.Net.BCrypt.GenerateSalt();
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerUserRequest.Password, salt);
@@ -52,7 +53,7 @@ namespace UserService.Business.Services
                 UserId = user.Id,
                 Role = registerUserRequest.Role
             };
-            _accountRepository.AddOne(account);
+            await _accountRepository.AddOneAsync(account).ConfigureAwait(false);
 
             return user;
         }

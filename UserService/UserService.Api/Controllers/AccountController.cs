@@ -1,13 +1,10 @@
-﻿using System.Security.Claims;
-using System.Threading.Tasks;
-using Core.JWT;
+﻿using System.Threading.Tasks;
+using Formuler.Core.JWT;
+using Formuler.Shared.DTO.UserService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using UserService.Business.DTO.Requests;
-using UserService.Business.DTO.Results;
-using UserService.Business.Services.Account;
-using UserService.Business.Services.User;
+using UserService.Business.Services;
 
 namespace UserService.Api.Controllers
 {
@@ -18,37 +15,23 @@ namespace UserService.Api.Controllers
     {
         private readonly ILogger<AccountController> _logger;
         private readonly IAccountService _accountService;
-        private readonly IUserService _userService;
         private readonly IJwtAuthManager _jwtAuthManager;
 
-        public AccountController(ILogger<AccountController> logger, IAccountService accountService, IUserService userService, IJwtAuthManager jwtAuthManager)
+        public AccountController(ILogger<AccountController> logger, IAccountService accountService, IJwtAuthManager jwtAuthManager)
         {
             _logger = logger;
             _accountService = accountService;
-            _userService = userService;
             _jwtAuthManager = jwtAuthManager;
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public ActionResult Login([FromBody] LoginRequest request)
+        public async Task<ActionResult> Login([FromBody] LoginRequestDTO request)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            return Ok(_accountService.Login(request));
-        }
-
-        [HttpGet("user")]
-        [Authorize]
-        public ActionResult GetCurrentUser()
-        {
-            return Ok(new LoginResult
-            {
-                UserName = User.Identity?.Name,
-                Role = User.FindFirst(ClaimTypes.Role)?.Value ?? string.Empty,
-                OriginalUserName = User.FindFirst("OriginalUserName")?.Value
-            });
+            return Ok(await _accountService.Login(request));
         }
 
         [HttpPost("logout")]
@@ -66,7 +49,7 @@ namespace UserService.Api.Controllers
 
         [HttpPost("refresh-token")]
         [Authorize]
-        public async Task<ActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+        public async Task<ActionResult> RefreshToken([FromBody] RefreshTokenRequestDTO request)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -76,25 +59,18 @@ namespace UserService.Api.Controllers
 
         [HttpPost("impersonation")]
         [Authorize(Roles = UserRoles.Admin)]
-        public ActionResult Impersonate([FromBody] ImpersonationRequest request)
+        public async Task<ActionResult> Impersonate([FromBody] ImpersonationRequestDTO request)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            return Ok(_accountService.Impersonate(request));
+            return Ok(await _accountService.Impersonate(request));
         }
 
         [HttpPost("stop-impersonation")]
-        public ActionResult StopImpersonation()
+        public async Task<ActionResult> StopImpersonation()
         {
-            return Ok(_accountService.StopImpersonation());
-        }
-
-        [AllowAnonymous]
-        [HttpPost("singup")]
-        public ActionResult Singup(RegisterUserRequest registerUserRequest)
-        {
-            return Ok(_userService.RegisterUser(registerUserRequest));
+            return Ok(await _accountService.StopImpersonation());
         }
     }
 }

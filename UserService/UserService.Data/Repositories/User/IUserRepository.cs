@@ -1,4 +1,4 @@
-﻿using Core.Repository;
+﻿using Formuler.Core.Repository;
 using UserService.Data.Models;
 
 namespace UserService.Data.Repositories

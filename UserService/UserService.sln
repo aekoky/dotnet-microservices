@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService.Api", "UserService.Api\UserService.Api.csproj", "{32BE997A-EC16-4568-8BF0-D6B73C28771D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "..\Core\Core\Core.csproj", "{269F27DD-C77F-4E9F-840C-396AE2CD962F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Formuler.Core", "..\Core\Formuler.Core\Formuler.Core.csproj", "{269F27DD-C77F-4E9F-840C-396AE2CD962F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService.Business", "UserService.Business\UserService.Business.csproj", "{CC5FAD6A-A382-490E-B147-D124A66FF45D}"
 EndProject

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Core.csproj" />
+    <ProjectReference Include="..\..\Core\Formuler.Core\Formuler.Core.csproj" />
+    <ProjectReference Include="..\..\Core\Formuler.Shared\Formuler.Shared.csproj" />
     <ProjectReference Include="..\UserService.Data\UserService.Data.csproj" />
   </ItemGroup>
 

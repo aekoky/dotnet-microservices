@@ -1,4 +1,4 @@
-﻿using Core.Repository;
+﻿using Formuler.Core.Repository;
 using MongoDbGenericRepository;
 using UserService.Data.Models;
 

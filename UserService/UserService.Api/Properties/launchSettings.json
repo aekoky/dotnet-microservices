@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:65502",
-      "sslPort": 44398
+      "applicationUrl": "https://localhost:49284",
+      "sslPort": 49284
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",
@@ -12,27 +12,35 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "UserService": {
+    "UserService.Api": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+      "applicationUrl": "https://localhost:49284;http://localhost:49184"
     },
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "environmentVariables": {
+        //"ASPNETCORE_Kestrel__Certificates__Default__Path": "/root/.aspnet/https/UserService.API.pfx",
+        //"ASPNETCORE_Kestrel__Certificates__Default__Password": "6e10e7c5-1a3e-4330-93f9-c964f5880dd9",
+        "Certificates_Default_Path": "/root/.aspnet/https/UserService.API.pfx",
+        "ASPNETCORE_HTTPS_PORT": "49284"
+      },
       "publishAllPorts": true,
       "useSSL": true,
-      "DockerfileRunArguments": ""
+      "DockerfileRunArguments": "",
+      "httpPort": 49184,
+      "sslPort": 49284
     }
   }
 }

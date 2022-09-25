@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>224d4f62-481a-4329-b7fd-a4f4b74cccb0</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <DockerfileContext>..\..</DockerfileContext>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.6" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Formuler.Core\Formuler.Core.csproj" />
+    <ProjectReference Include="..\..\Core\Formuler.Shared\Formuler.Shared.csproj" />
+    <ProjectReference Include="..\RenderingService.Business\RenderingService.Business.csproj" />
+    <ProjectReference Include="..\RenderingService.Data\RenderingService.Data.csproj" />
+  </ItemGroup>
+
+
+</Project>

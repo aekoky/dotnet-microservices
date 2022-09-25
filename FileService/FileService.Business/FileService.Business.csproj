@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +13,10 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.28" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.28" />
     <PackageReference Include="Storage.Net" Version="9.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Formuler.Shared\Formuler.Shared.csproj" />
   </ItemGroup>
 
 </Project>

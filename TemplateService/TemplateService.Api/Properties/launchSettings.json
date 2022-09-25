@@ -1,18 +1,18 @@
-﻿{
-  "$schema": "http://json.schemastore.org/launchsettings.json",
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:12007",
-      "sslPort": 44316
+      "applicationUrl": "https://localhost:49283",
+      "sslPort": 49283
     }
   },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,11 +20,27 @@
     "TemplateService.Api": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:49283;http://localhost:49183"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "environmentVariables": {
+        //"ASPNETCORE_Kestrel__Certificates__Default__Path": "/root/.aspnet/https/TemplateService.API.pfx",
+        //"ASPNETCORE_Kestrel__Certificates__Default__Password": "5f8f557c-f194-4d15-af4d-033c0e4d05c8",
+        "Certificates_Default_Path": "/root/.aspnet/https/TemplateService.API.pfx",
+        "ASPNETCORE_HTTPS_PORT": "49283"
+      },
+      "DockerfileRunArguments": "",
+      "publishAllPorts": true,
+      "useSSL": true,
+      "httpPort": 49183,
+      "sslPort": 49283
     }
   }
 }

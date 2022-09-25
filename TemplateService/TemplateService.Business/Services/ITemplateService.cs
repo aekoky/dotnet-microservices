@@ -1,15 +1,16 @@
-﻿using System;
+﻿using Formuler.Shared.DTO.TemplateService;
+using System;
 using System.Collections.Generic;
-using TemplateService.Business.DTO;
+using System.Threading.Tasks;
 
 namespace TemplateService.Business.Services
 {
     public interface ITemplateService
     {
-        TemplateDTO GetTemplate(Guid templateId);
-        IList<TemplateDTO> GetTemplates();
-        TemplateDTO CreateTemplate(CreateTemplateDTO template);
-        TemplateDTO UpdateTemplate(UpdateTemplateDTO template);
-        void DropTemplate(Guid templateId);
+        Task<TemplateDTO> GetTemplate(Guid templateId);
+        Task<IList<TemplateDTO>> GetTemplates(TemplateFilterDTO templateFilterDTO);
+        Task<TemplateDTO> CreateTemplate(CreateTemplateDTO template);
+        Task<TemplateDTO> UpdateTemplate(UpdateTemplateDTO template);
+        Task DropTemplate(Guid templateId);
     }
 }

@@ -1,0 +1,26 @@
+{
+  "profiles": {
+    "RenderingService.Worker": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "environmentVariables": {
+        //"ASPNETCORE_Kestrel__Certificates__Default__Path": "/root/.aspnet/https/TemplateService.API.pfx",
+        //"ASPNETCORE_Kestrel__Certificates__Default__Password": "55caa28a-a47f-47dd-9fe6-77621460e3c5",
+        "DOTNET_ENVIRONMENT": "Development",
+        "Certificates_Default_Path": "/root/.aspnet/https/RenderingService.API.pfx"
+      }
+    },
+    "WSL 2": {
+      "commandName": "WSL2",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      },
+      "distributionName": ""
+    }
+  }
+}

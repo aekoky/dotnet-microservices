@@ -7,10 +7,14 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
-COPY ["UserService.Api.csproj", "."]
-RUN dotnet restore "./UserService.Api.csproj"
+COPY ["UserService/UserService.Api/UserService.Api.csproj", "UserService/UserService.Api/"]
+COPY ["Core/Formuler.Core/Formuler.Core.csproj", "Core/Formuler.Core/"]
+COPY ["UserService/UserService.Business/UserService.Business.csproj", "UserService/UserService.Business/"]
+COPY ["Core/Formuler.Shared/Formuler.Shared.csproj", "Core/Formuler.Shared/"]
+COPY ["UserService/UserService.Data/UserService.Data.csproj", "UserService/UserService.Data/"]
+RUN dotnet restore "UserService/UserService.Api/UserService.Api.csproj"
 COPY . .
-WORKDIR "/src/."
+WORKDIR "/src/UserService/UserService.Api"
 RUN dotnet build "UserService.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish

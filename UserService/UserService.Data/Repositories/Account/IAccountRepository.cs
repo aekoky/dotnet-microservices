@@ -1,12 +1,13 @@
-﻿using Core.Repository;
+﻿using Formuler.Core.Repository;
+using System.Threading.Tasks;
 using UserService.Data.Models;
 
 namespace UserService.Data.Repositories
 {
     public interface IAccountRepository : IMongoRepository<AccountEntity>
     {
-        AccountEntity GetAccountByUsername(string username);
-        AccountEntity GetAccountByUsernameAndPassword(string username, string password);
+        Task<AccountEntity> GetAccountByUsername(string username);
+        Task<AccountEntity> GetAccountByUsernameAndPassword(string username, string password);
 
     }
 }

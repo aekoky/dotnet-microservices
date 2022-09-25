@@ -1,4 +1,5 @@
-﻿using Core.JWT;
+﻿using Formuler.Core.JWT;
+using Formuler.Shared.DTO.UserService;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -7,8 +8,6 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using UserService.Business.DTO.Requests;
-using UserService.Business.DTO.Results;
 using UserService.Data.Models;
 using UserService.Data.Repositories;
 
@@ -29,17 +28,17 @@ namespace UserService.Business.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public AccountEntity GetAccount(string username)
+        public async Task<AccountEntity> GetAccount(string username)
         {
-            return _accountRepository.GetAccountByUsername(username);
+            return await _accountRepository.GetAccountByUsername(username).ConfigureAwait(false);
         }
 
-        public LoginResult Impersonate(ImpersonationRequest request)
+        public async Task<LoginResultDTO> Impersonate(ImpersonationRequestDTO request)
         {
             var userName = _httpContextAccessor.HttpContext.User.Identity?.Name;
             _logger.LogInformation($"User [{userName}] is trying to impersonate [{request.UserName}].");
 
-            var impersonatedAccount = GetAccount(request.UserName);
+            var impersonatedAccount = await GetAccount(request.UserName).ConfigureAwait(false);
             if (impersonatedAccount is null)
             {
                 _logger.LogWarning($"User [{userName}] failed to impersonate [{request.UserName}] due to the target user not found.");
@@ -53,6 +52,7 @@ namespace UserService.Business.Services
 
             var claims = new[]
             {
+                new Claim(ClaimTypes.NameIdentifier,impersonatedAccount.Id.ToString()),
                 new Claim(ClaimTypes.Name,request.UserName),
                 new Claim(ClaimTypes.Role, impersonatedAccount.Role),
                 new Claim("OriginalUserName", userName ?? string.Empty)
@@ -60,7 +60,7 @@ namespace UserService.Business.Services
 
             var jwtResult = _jwtAuthManager.GenerateTokens(request.UserName, claims, DateTime.Now);
             _logger.LogInformation($"User [{request.UserName}] is impersonating [{request.UserName}] in the system.");
-            return new LoginResult
+            return new LoginResultDTO
             {
                 UserName = request.UserName,
                 Role = impersonatedAccount.Role,
@@ -70,9 +70,9 @@ namespace UserService.Business.Services
             };
         }
 
-        public bool IsValidUserCredentials(string username, string password)
+        public async Task<bool> IsValidUserCredentials(string username, string password)
         {
-            var account = GetAccount(username);
+            var account = await GetAccount(username).ConfigureAwait(false);
             if (account is null)
             {
                 _logger.LogWarning($"No User were found with the Username [{username}]");
@@ -81,29 +81,30 @@ namespace UserService.Business.Services
 
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, account.Salt);
 
-            account = _accountRepository.GetAccountByUsernameAndPassword(username, hashedPassword);
+            account = await _accountRepository.GetAccountByUsernameAndPassword(username, hashedPassword).ConfigureAwait(false);
 
             return account != null;
         }
 
-        public LoginResult Login(LoginRequest request)
+        public async Task<LoginResultDTO> Login(LoginRequestDTO request)
         {
-            if (!IsValidUserCredentials(request.UserName, request.Password))
+            if (!await IsValidUserCredentials(request.UserName, request.Password).ConfigureAwait(false))
             {
                 _logger.LogWarning($"Unauthorized");
                 throw new ProblemDetailsException(StatusCodes.Status401Unauthorized, $"Unauthorized");
             }
 
-            var account = GetAccount(request.UserName);
+            var account = await GetAccount(request.UserName).ConfigureAwait(false);
             var claims = new[]
             {
+                new Claim(ClaimTypes.NameIdentifier,account.Id.ToString()),
                 new Claim(ClaimTypes.Name,request.UserName),
                 new Claim(ClaimTypes.Role, account.Role)
             };
 
             var jwtResult = _jwtAuthManager.GenerateTokens(request.UserName, claims, DateTime.Now);
             _logger.LogInformation($"User [{request.UserName}] logged in the system.");
-            return new LoginResult
+            return new LoginResultDTO
             {
                 UserName = request.UserName,
                 Role = account.Role,
@@ -112,7 +113,7 @@ namespace UserService.Business.Services
             };
         }
 
-        public async Task<LoginResult> RefreshToken(RefreshTokenRequest request)
+        public async Task<LoginResultDTO> RefreshToken(RefreshTokenRequestDTO request)
         {
             try
             {
@@ -128,7 +129,7 @@ namespace UserService.Business.Services
                 var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("Bearer", "access_token");
                 var jwtResult = _jwtAuthManager.Refresh(request.RefreshToken, accessToken, DateTime.Now);
                 _logger.LogInformation($"User [{userName}] has refreshed JWT token.");
-                return new LoginResult
+                return new LoginResultDTO
                 {
                     UserName = userName,
                     Role = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role)?.Value ?? string.Empty,
@@ -143,7 +144,7 @@ namespace UserService.Business.Services
             }
         }
 
-        public LoginResult StopImpersonation()
+        public async Task<LoginResultDTO> StopImpersonation()
         {
             var userName = _httpContextAccessor.HttpContext.User.Identity?.Name;
             var originalUserName = _httpContextAccessor.HttpContext.User.FindFirst("OriginalUserName")?.Value;
@@ -154,7 +155,7 @@ namespace UserService.Business.Services
             }
             _logger.LogInformation($"User [{originalUserName}] is trying to stop impersonate [{userName}].");
 
-            var account = GetAccount(originalUserName);
+            var account = await GetAccount(originalUserName).ConfigureAwait(false);
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name,originalUserName),
@@ -163,7 +164,7 @@ namespace UserService.Business.Services
 
             var jwtResult = _jwtAuthManager.GenerateTokens(originalUserName, claims, DateTime.Now);
             _logger.LogInformation($"User [{originalUserName}] has stopped impersonation.");
-            return new LoginResult
+            return new LoginResultDTO
             {
                 UserName = originalUserName,
                 Role = account.Role,

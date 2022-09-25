@@ -1,39 +1,53 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Formuler.Shared.DTO.TemplateService;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using TemplateService.Business.Services;
 
 namespace TemplateService.Api.Controllers
 {
     [ApiController]
+    //[Authorize]
     [Route("[controller]")]
     public class TemplateController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private readonly ITemplateService _templateService;
 
-        private readonly ILogger<TemplateController> _logger;
-
-        public TemplateController(ILogger<TemplateController> logger)
+        public TemplateController(ITemplateService templateService)
         {
-            _logger = logger;
+            _templateService = templateService;
+        }
+
+        [HttpGet("{templateId:guid}")]
+        public async Task<TemplateDTO> GetTemplate([FromRoute] Guid templateId)
+        {
+            return await _templateService.GetTemplate(templateId);
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public async Task<IList<TemplateDTO>> GetTemplates([FromQuery] string keyword)
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            return await _templateService.GetTemplates(new TemplateFilterDTO { Keyword = keyword });
+        }
+
+        [HttpPost]
+        public async Task<TemplateDTO> CreateTemplate([FromForm] CreateTemplateDTO template)
+        {
+            return await _templateService.CreateTemplate(template);
+        }
+
+        [HttpPut]
+        public async Task<TemplateDTO> UpdateTemplate([FromBody] UpdateTemplateDTO template)
+        {
+            return await _templateService.UpdateTemplate(template);
+        }
+
+        [HttpDelete("{templateId:guid}")]
+        public async Task DropTemplate([FromRoute] Guid templateId)
+        {
+            await _templateService.DropTemplate(templateId);
         }
     }
 }

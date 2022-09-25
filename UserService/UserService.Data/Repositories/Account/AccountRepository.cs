@@ -1,6 +1,7 @@
-﻿using Core.Repository;
+﻿using Formuler.Core.Repository;
 using MongoDB.Driver;
 using MongoDbGenericRepository;
+using System.Threading.Tasks;
 using UserService.Data.Models;
 
 namespace UserService.Data.Repositories
@@ -11,16 +12,17 @@ namespace UserService.Data.Repositories
         {
         }
 
-        public AccountEntity GetAccountByUsername(string username)
+        public async Task<AccountEntity> GetAccountByUsername(string username)
         {
-            return Find(account => username.Equals(account.Username), new FindOptions() { Collation = new Collation("en", strength: CollationStrength.Secondary) });
+            var findOptions = new FindOptions<AccountEntity>() { Collation = new Collation("en", strength: CollationStrength.Secondary) };
+            return await FindAsync(account => username.Equals(account.Username), findOptions).ConfigureAwait(false);
         }
 
-        public AccountEntity GetAccountByUsernameAndPassword(string username, string password)
+        public async Task<AccountEntity> GetAccountByUsernameAndPassword(string username, string password)
         {
             var filter = Builders<AccountEntity>.Filter.Eq(account => account.Username, username) &
             Builders<AccountEntity>.Filter.Eq(account => account.Password, password);
-            return Find(filter);
+            return await FindAsync(filter).ConfigureAwait(false);
         }
     }
 }

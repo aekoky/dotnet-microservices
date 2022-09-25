@@ -1,11 +1,12 @@
-﻿using UserService.Business.DTO.Requests;
+﻿using Formuler.Shared.DTO.UserService;
+using System.Threading.Tasks;
 using UserService.Data.Models;
 
 namespace UserService.Business.Services
 {
     public interface IUserService
     {
-        UserEntity RegisterUser(RegisterUserRequest registerUserRequest);
-        UserEntity GetUser(string username);
+        Task<UserEntity> RegisterUser(RegisterUserRequestDTO registerUserRequest);
+        Task<UserEntity> GetUser(string username);
     }
 }

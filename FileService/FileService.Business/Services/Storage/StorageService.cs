@@ -1,8 +1,8 @@
-﻿using FileService.Business.DTO;
-using Microsoft.AspNetCore.Http.Internal;
+﻿using Formuler.Shared.DTO.FileService;
 using Microsoft.Extensions.Logging;
 using Storage.Net.Blobs;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace FileService.Business.Services
@@ -38,7 +38,7 @@ namespace FileService.Business.Services
             if (await _blobStorage.ExistsAsync(path).ConfigureAwait(false))
             {
                 _logger.LogInformation($"File {path} downloaded");
-                var data = await _blobStorage.ReadBytesAsync(path);
+                var data = await _blobStorage.ReadBytesAsync(path).ConfigureAwait(false);
 
                 return new FileDto
                 {
@@ -62,7 +62,7 @@ namespace FileService.Business.Services
             }
 
             await _blobStorage.SetBlobAsync(new Blob(path)).ConfigureAwait(false);
-            await _blobStorage.WriteAsync(path, file.Data.OpenReadStream()).ConfigureAwait(false);
+            await _blobStorage.WriteAsync(path, new MemoryStream(file.Data)).ConfigureAwait(false);
             _logger.LogInformation($"File {path} have benn saved");
         }
     }

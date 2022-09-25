@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.JWT;
+using Formuler.Core.JWT;
 using Microsoft.Extensions.Hosting;
 
 namespace UserService.Api

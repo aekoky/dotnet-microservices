@@ -7,10 +7,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
-COPY ["FileService.API/FileService.API.csproj", "FileService.API/"]
-RUN dotnet restore "FileService.API/FileService.API.csproj"
+COPY ["FileService/FileService.API/FileService.API.csproj", "FileService/FileService.API/"]
+COPY ["FileService/FileService.Business/FileService.Business.csproj", "FileService/FileService.Business/"]
+COPY ["Core/Formuler.Shared/Formuler.Shared.csproj", "Core/Formuler.Shared/"]
+COPY ["Core/Formuler.Core/Formuler.Core.csproj", "Core/Formuler.Core/"]
+RUN dotnet restore "FileService/FileService.API/FileService.API.csproj"
 COPY . .
-WORKDIR "/src/FileService.API"
+WORKDIR "/src/FileService/FileService.API"
 RUN dotnet build "FileService.API.csproj" -c Release -o /app/build
 
 FROM build AS publish

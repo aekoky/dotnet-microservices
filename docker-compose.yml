@@ -1,0 +1,46 @@
+version: '3.4'
+
+services:
+  templateservice.api:
+    image: ${DOCKER_REGISTRY-}templateserviceapi
+    build:
+      context: .
+      dockerfile: TemplateService/TemplateService.Api/Dockerfile
+    networks:
+        - rabbitmq_net
+
+  userservice.api:
+    image: ${DOCKER_REGISTRY-}userserviceapi
+    build:
+      context: .
+      dockerfile: UserService/UserService.Api/Dockerfile
+
+  fileservice.api:
+    image: ${DOCKER_REGISTRY-}fileserviceapi
+    build:
+      context: .
+      dockerfile: FileService/FileService.API/Dockerfile
+
+  renderingservice.api:
+    image: ${DOCKER_REGISTRY-}renderingserviceapi
+    build:
+      context: .
+      dockerfile: RenderingService/RenderingService.Api/Dockerfile
+    networks:
+        - rabbitmq_net
+
+  renderingservice.worker:
+    image: ${DOCKER_REGISTRY-}renderingserviceworker
+    build:
+      context: .
+      dockerfile: RenderingService/RenderingService.Worker/Dockerfile
+
+  rabbitmq:
+    image: masstransit/rabbitmq
+    container_name: 'rabbitmq'
+    networks:
+        - rabbitmq_net
+
+networks:
+  rabbitmq_net:
+    driver: bridge
