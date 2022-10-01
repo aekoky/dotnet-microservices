@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" Sdk="Microsoft.Docker.Sdk">
-  <PropertyGroup Label="Globals">
-    <ProjectVersion>2.1</ProjectVersion>
-    <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>3125b026-125e-438d-81ce-cb9b219434a3</ProjectGuid>
-    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
-    <DockerServiceName>renderingservice.api</DockerServiceName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-  <ItemGroup>
-    <None Include="docker-compose.override.yml">
-      <DependentUpon>docker-compose.yml</DependentUpon>
-    </None>
-    <None Include="docker-compose.yml" />
-    <None Include=".dockerignore" />
-  </ItemGroup>
+	<PropertyGroup Label="Globals">
+		<ProjectVersion>2.1</ProjectVersion>
+		<DockerTargetOS>Linux</DockerTargetOS>
+		<ProjectGuid>3125b026-125e-438d-81ce-cb9b219434a3</ProjectGuid>
+		<DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
+		<DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
+		<DockerServiceName>renderingservice.api</DockerServiceName>
+		<DockerComposeBaseFilePath>docker-compose</DockerComposeBaseFilePath>
+		<AdditionalComposeFilePaths>docker-compose.development.yml</AdditionalComposeFilePaths>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+	<ItemGroup>
+		<None Include="docker-compose.development.yml" >
+			<DependentUpon>docker-compose.yml</DependentUpon>
+		</None>
+		<None Include="docker-compose.production.yml">
+			<DependentUpon>docker-compose.yml</DependentUpon>
+		</None>
+		<None Include="docker-compose.yml" />
+		<None Include=".dockerignore" />
+	</ItemGroup>
 </Project>

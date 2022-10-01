@@ -1,14 +1,12 @@
 using FileService.Business;
-using Formuler.Core.JWT;
 using Hellang.Middleware.ProblemDetails;
-using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System;
+using Formuler.Core.MessageBroker;
 
 namespace FileService.API
 {
@@ -27,23 +25,7 @@ namespace FileService.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<StorageSettings>(Configuration.GetSection(nameof(StorageSettings)));
-
-            // OPTIONAL, but can be used to configure the bus options
-            services.AddOptions<MassTransitHostOptions>()
-                .Configure(options =>
-                {
-                    // if specified, waits until the bus is started before
-                    // returning from IHostedService.StartAsync
-                    // default is false
-                    options.WaitUntilStarted = true;
-
-                    // if specified, limits the wait time when starting the bus
-                    options.StartTimeout = TimeSpan.FromSeconds(10);
-
-                    // if specified, limits the wait time when stopping the bus
-                    options.StopTimeout = TimeSpan.FromSeconds(30);
-                });
-
+            
             services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
             // Register the Swagger generator, defining 1 or more Swagger documents

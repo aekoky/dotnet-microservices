@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\Formuler.Core\Formuler.Core.csproj" />
     <ProjectReference Include="..\FileService.Business\FileService.Business.csproj" />
   </ItemGroup>
 

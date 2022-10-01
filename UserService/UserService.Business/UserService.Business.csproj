@@ -7,13 +7,12 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.28" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Formuler.Core\Formuler.Core.csproj" />
-    <ProjectReference Include="..\..\Core\Formuler.Shared\Formuler.Shared.csproj" />
+    <ProjectReference Include="..\..\Core\Formuler.WebCore\Formuler.WebCore.csproj" />
     <ProjectReference Include="..\UserService.Data\UserService.Data.csproj" />
   </ItemGroup>
 

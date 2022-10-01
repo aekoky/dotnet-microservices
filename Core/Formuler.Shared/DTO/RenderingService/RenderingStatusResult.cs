@@ -1,4 +1,4 @@
-﻿using Formuler.Core.Enums;
+﻿using Formuler.Shared.Enums;
 
 namespace Formuler.Shared.DTO.RenderingService
 {

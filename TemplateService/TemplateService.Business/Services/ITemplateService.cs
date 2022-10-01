@@ -1,7 +1,7 @@
-﻿using Formuler.Shared.DTO.TemplateService;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TemplateService.Business.DTO.TemplateService;
 
 namespace TemplateService.Business.Services
 {

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Http;
 using RenderingService.Data.Models;
-using Formuler.Core.Enums;
+using Formuler.Shared.Enums;
 using Formuler.Core.MessageBroker.Commands;
 using System;
 using Formuler.Core.ApiFacade.FileService;
@@ -65,7 +65,7 @@ namespace RenderingService.Business.Services
 
             await _publishEndpoint.Publish(new RenderingCommand
             {
-                DocumentId = documentData.Id
+                DocumentId = document.Id
             });
 
             return document.Id;
@@ -74,12 +74,16 @@ namespace RenderingService.Business.Services
         public async Task<RenderingStatusResult> GetRenderingStatus(Guid documentId)
         {
             byte[] file = new byte[0];
-            var test = await _documentHistoryRepository.GetAsync(dhe => dhe.DocumentId == documentId);
-            var documentHistory = await _documentHistoryRepository.GetByMaxAsync<DocumentHistoryEntity>(dh => dh.DocumentId == documentId, dh => dh.UpdatedDate);
+            var documentHistory = await _documentHistoryRepository.GetByMaxAsync<DocumentHistoryEntity>(dh => dh.DocumentId == documentId, dh => dh.AddedAtUtc);
 
             if (documentHistory.RenderingStatus == RenderingStatus.Successed)
             {
                 var documentEntity = await _documentRepository.FindAsync(documentId);
+                if(documentEntity is null)
+                {
+                    _logger.LogError("Document not found");
+                    throw new ProblemDetailsException(StatusCodes.Status404NotFound, $"Document not found.");
+                }
                 if (!documentEntity.FileId.Equals(Guid.Empty))
                 {
                     var downloadedFile = await _fileServiceApiFacade.DownloadFile(documentEntity.FileId);

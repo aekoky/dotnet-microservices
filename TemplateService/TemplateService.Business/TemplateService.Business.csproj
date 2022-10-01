@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Formuler.Shared\Formuler.Shared.csproj" />
+    <ProjectReference Include="..\..\Core\Formuler.WebCore\Formuler.WebCore.csproj" />
     <ProjectReference Include="..\TemplateService.Data\TemplateService.Data.csproj" />
   </ItemGroup>
 

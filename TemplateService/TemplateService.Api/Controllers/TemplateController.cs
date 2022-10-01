@@ -1,9 +1,9 @@
-﻿using Formuler.Shared.DTO.TemplateService;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TemplateService.Business.DTO.TemplateService;
 using TemplateService.Business.Services;
 
 namespace TemplateService.Api.Controllers

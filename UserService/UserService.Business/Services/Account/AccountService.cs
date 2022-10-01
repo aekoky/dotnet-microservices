@@ -1,5 +1,5 @@
-﻿using Formuler.Core.JWT;
-using Formuler.Shared.DTO.UserService;
+﻿using Formuler.Shared.DTO.UserService;
+using Formuler.WebCore.JWT;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;

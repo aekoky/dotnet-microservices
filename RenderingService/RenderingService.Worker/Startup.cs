@@ -31,13 +31,12 @@ namespace RenderingService.Worker
             services.Configure<FileServiceFacadeSettings>(Configuration.GetSection(nameof(FileServiceFacadeSettings)));
             services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
 
-            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
-
-            services.AddRabbitMQ(Configuration, typeof(RenderingCommandConsumer), typeof(TemplateCreatedEventConsumer), typeof(TemplateDeletedEventConsumer));
+            services.AddSingleton<IConverter, FormulerSynchronizedConverter>();
 
             services.AddHostedService<Worker>();
             services.AddRestClient(Configuration, CurrentEnvironment.IsDevelopment());
             services.AddRenderingServiceeData();
+            services.AddRabbitMQ(Configuration, typeof(RenderingCommandConsumer), typeof(TemplateCreatedEventConsumer), typeof(TemplateDeletedEventConsumer));
             services.AddSingleton<IFileServiceApiFacade, FileServiceApiFacade>();
         }
     }

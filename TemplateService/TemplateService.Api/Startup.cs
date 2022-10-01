@@ -1,8 +1,8 @@
-using Formuler.Core.JWT;
 using Formuler.Core.MessageBroker;
 using Formuler.Core.Repository;
 using Formuler.Shared.ApiFacade;
 using Formuler.Shared.ApiFacade.ApiSettings;
+using Formuler.WebCore.JWT;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

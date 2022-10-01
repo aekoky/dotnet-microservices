@@ -1,4 +1,4 @@
-﻿using Formuler.Core.Enums;
+﻿using Formuler.Shared.Enums;
 using System;
 
 namespace Formuler.Core.MessageBroker.Events

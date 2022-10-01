@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Formuler.Core\Formuler.Core.csproj" />
+    <ProjectReference Include="..\..\Core\Formuler.WebCore\Formuler.WebCore.csproj" />
     <ProjectReference Include="..\UserService.Business\UserService.Business.csproj" />
   </ItemGroup>
 

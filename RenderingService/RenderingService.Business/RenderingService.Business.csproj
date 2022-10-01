@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Formuler.Shared\Formuler.Shared.csproj" />
     <ProjectReference Include="..\RenderingService.Data\RenderingService.Data.csproj" />
   </ItemGroup>
 

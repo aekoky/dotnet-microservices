@@ -10,13 +10,11 @@ namespace UserService.Business.Services
 {
     public class UserService : IUserService
     {
-        private readonly ILogger<UserService> _logger;
         private readonly IUserRepository _userRepository;
         private readonly IAccountRepository _accountRepository;
 
-        public UserService(ILogger<UserService> logger, IUserRepository userRepository, IAccountRepository accountRepository)
+        public UserService(IUserRepository userRepository, IAccountRepository accountRepository)
         {
-            _logger = logger;
             _userRepository = userRepository;
             _accountRepository = accountRepository;
         }

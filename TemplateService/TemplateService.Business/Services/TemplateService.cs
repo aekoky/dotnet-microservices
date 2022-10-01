@@ -1,8 +1,7 @@
 ﻿using Formuler.Core.ApiFacade.FileService;
-using Formuler.Core.JWT;
 using Formuler.Core.MessageBroker.Events;
 using Formuler.Shared.DTO.FileService;
-using Formuler.Shared.DTO.TemplateService;
+using Formuler.WebCore.JWT;
 using MassTransit;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -11,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using TemplateService.Business.DTO.TemplateService;
 using TemplateService.Data.Models;
 using TemplateService.Data.Repositories;
 

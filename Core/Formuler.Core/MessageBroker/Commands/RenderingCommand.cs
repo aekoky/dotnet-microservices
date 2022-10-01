@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson;
-using System;
+﻿using System;
 
 namespace Formuler.Core.MessageBroker.Commands
 {

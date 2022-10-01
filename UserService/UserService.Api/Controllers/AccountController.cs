@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Formuler.Core.JWT;
 using Formuler.Shared.DTO.UserService;
+using Formuler.WebCore.JWT;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

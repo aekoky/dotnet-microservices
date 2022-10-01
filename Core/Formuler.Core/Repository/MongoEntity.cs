@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDbGenericRepository.Models;
 using System;
 using System.Runtime.Serialization;

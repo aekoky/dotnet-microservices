@@ -1,5 +1,5 @@
-using Formuler.Core.JWT;
 using Formuler.Core.Repository;
+using Formuler.WebCore.JWT;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
