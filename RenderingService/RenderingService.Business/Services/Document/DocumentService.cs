@@ -86,7 +86,7 @@ namespace RenderingService.Business.Services
                 }
                 if (!documentEntity.FileId.Equals(Guid.Empty))
                 {
-                    var downloadedFile = await _fileServiceApiFacade.DownloadFile(documentEntity.FileId);
+                    var downloadedFile = await _fileServiceApiFacade.DownloadFile(documentEntity.FileId, true);
                     file = downloadedFile.Data;
                 }
             }

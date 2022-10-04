@@ -8,6 +8,6 @@ namespace Formuler.Core.ApiFacade.FileService
     {
         Task DeleteFile(Guid fileId);
         Task SaveFile(SaveFileDto file);
-        Task<FileDto> DownloadFile(Guid guid);
+        Task<FileDto> DownloadFile(Guid guid, bool retry = false);
     }
 }

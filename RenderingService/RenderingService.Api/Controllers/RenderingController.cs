@@ -1,4 +1,5 @@
 ﻿using Formuler.Shared.DTO.RenderingService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RenderingService.Business.Services;
 using System;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 namespace RenderingService.Api.Controllers
 {
     [Route("api/[controller]")]
+    //[Authorize]
     [ApiController]
     public class RenderingController : ControllerBase
     {

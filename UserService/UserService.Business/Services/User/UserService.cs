@@ -1,7 +1,6 @@
 ﻿using Formuler.Shared.DTO.UserService;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using UserService.Data.Models;
 using UserService.Data.Repositories;

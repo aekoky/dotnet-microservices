@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using Scriban.Runtime;
 using System.Dynamic;
 using System.Collections.Generic;
+using Formuler.Core.Helpers;
 
 namespace RenderingService.Worker.Consumers
 {
@@ -66,7 +67,7 @@ namespace RenderingService.Worker.Consumers
                 var template = await _templateRepository.FindAsync(documentData.TemplateId);
                 if (template is null)
                     throw new Exception("Template not found");
-                var templateFile = await _fileServiceApiFacade.DownloadFile(template.FileId);
+                var templateFile = await _fileServiceApiFacade.DownloadFile(template.FileId, true);
                 var htmlString = await ParseHtmlAsync(templateFile.Data, documentData.Data);
                 var pdfDocument = ParsePdfAsync(htmlString);
                 var savefiledto = new SaveFileDto { Id = document.Id, Data = pdfDocument };
@@ -101,8 +102,8 @@ namespace RenderingService.Worker.Consumers
             var htmlTemplateString = Encoding.UTF8.GetString(templateData);
             var htmlTemplate = Template.Parse(htmlTemplateString);
             var expando = JsonConvert.DeserializeObject<ExpandoObject>(documentData.ToJson());
-            var sObject = BuildScriptObject(expando);
-            return await htmlTemplate.RenderAsync(sObject);
+            var sObject = expando.BuildScriptObject();
+            return await htmlTemplate.RenderAsync(new TemplateContext(sObject));
         }
 
         private byte[] ParsePdfAsync(string htmlString)
@@ -120,33 +121,11 @@ namespace RenderingService.Worker.Consumers
                             PagesCount = true,
                             HtmlContent = htmlString,
                             WebSettings = { DefaultEncoding = "utf-8" },
-                            HeaderSettings = { FontSize = 9, Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
+                            HeaderSettings = { FontSize = 9, Right = "Page [page] de [toPage]", Line = true, Spacing = 2.812 }
                         }
                     }
             };
             return _converter.Convert(documentDefinition);
-        }
-
-        private ScriptObject BuildScriptObject(ExpandoObject expando)
-        {
-            var dict = (IDictionary<string, object>)expando;
-            var scriptObject = new ScriptObject();
-
-            foreach (var kv in dict)
-            {
-                var renamedKey = StandardMemberRenamer.Rename(kv.Key);
-
-                if (kv.Value is ExpandoObject expandoValue)
-                {
-                    scriptObject.Add(renamedKey, BuildScriptObject(expandoValue));
-                }
-                else
-                {
-                    scriptObject.Add(renamedKey, kv.Value);
-                }
-            }
-
-            return scriptObject;
         }
     }
 }
